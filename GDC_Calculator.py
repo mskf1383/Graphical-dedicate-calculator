@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMes
 from PyQt5.QtCore import Qt, pyqtSlot
 
 
+# Main window class
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
