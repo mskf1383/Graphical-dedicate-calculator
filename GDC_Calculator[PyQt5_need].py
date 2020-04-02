@@ -19,12 +19,57 @@ class MainWindow(QMainWindow):
 
     def GUI(self):
         self.setWindowTitle("Calculator")
-        self.resize(420, 180)
-
-        self.label = QLabel("", self)
-        self.label.move(20, 10)
+        self.setFixedSize(420, 180)
         
+        # Styling the calculator
+        self.setStyleSheet("""
 
+        QMainWindow {
+                background: #fff;
+        }
+
+        QLabel {
+                background: #eee;
+                color: #000;
+                border: 0px;
+                padding: 10px;
+        }
+
+        QPushButton {
+                background: #eee;
+                color: #000;
+                border: 0px;
+        }
+
+        QPushButton:hover {
+                background: #ddd;
+        }
+
+        QPushButton:pressed {
+                background: #5599ff;
+        }
+
+        QMessageBox QPushButton {
+                height: auto;
+                width: auto;
+        }
+
+        QMessageBox QLabel {
+                background: #fff;
+                color: #000;
+                border: 0px;
+                padding: 10px;
+        }
+        """)
+
+
+        # Label
+        self.label = QLabel("", self)
+        self.label.move(10, 10)
+        self.label.setFixedWidth(400)
+
+
+        # Number buttons
         self.num1 = QPushButton("1", self)
         self.num1.move(10, 50)
         self.num1.clicked.connect(self.num1_click)
@@ -65,6 +110,8 @@ class MainWindow(QMainWindow):
         self.num0.move(10, 140)
         self.num0.clicked.connect(self.num0_click)
 
+
+        # Action buttons
         self.add = QPushButton("+", self)
         self.add.move(110, 140)
         self.add.clicked.connect(self.add_click)
@@ -90,6 +137,7 @@ class MainWindow(QMainWindow):
         self.resault.clicked.connect(self.resault_click)
 
 
+    # When the buttons pressed
     @pyqtSlot()
     def num1_click(self):
         self.num += "1"
@@ -131,6 +179,8 @@ class MainWindow(QMainWindow):
         self.num += "0"
         self.label.setText(self.label.text() + "0")
 
+
+    # If addition button pressed
     def add_click(self):
         if self.num != "":
             self.label.setText(self.label.text() + " + ")
@@ -171,6 +221,7 @@ class MainWindow(QMainWindow):
             pass
 
 
+    # If subtraction button pressed
     def sub_click(self):
         if self.num != "":
             self.label.setText(self.label.text() + " - ")
@@ -211,6 +262,7 @@ class MainWindow(QMainWindow):
             pass
 
 
+    # If multiplication button pressed
     def mul_click(self):
         if self.num != "":
             self.label.setText(self.label.text() + " x ")
@@ -251,6 +303,7 @@ class MainWindow(QMainWindow):
             pass
 
 
+    # If division button pressed
     def div_click(self):
         if self.num != "":
             self.label.setText(self.label.text() + " / ")
@@ -291,6 +344,7 @@ class MainWindow(QMainWindow):
             pass
 
 
+    # If factorial button pressed
     def fac_click(self):
         if self.num != "":
             self.label.setText(self.label.text() + "! ")
@@ -327,6 +381,7 @@ class MainWindow(QMainWindow):
             self.action = "!"
  
 
+    # If resault button pressed
     def resault_click(self):
         if self.num != "":
             if self.action == "-":
@@ -369,7 +424,7 @@ class MainWindow(QMainWindow):
             pass
 
 
-# Run the appliaction
+# appliaction
 app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
