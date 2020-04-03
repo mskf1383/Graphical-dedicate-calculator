@@ -16,13 +16,45 @@ class MainWindow(QMainWindow):
         self.num = ""
         self.action = ""
         self.GUI()
+        self.darkMode = False
 
-    def GUI(self):
-        self.setWindowTitle("Calculator")
-        self.setFixedSize(420, 180)
+
+    # Buttons press actions
+    def button_press(self):
+        if self.action == "-":
+            self.num_list.append(float(self.num) * -1)
+
+        elif self.action == "+":
+            self.num_list.append(float(self.num))
         
-        # Styling the calculator
-        self.setStyleSheet("""
+        elif self.action == "*":
+            self.num = self.num_list[len(self.num_list) - 1] * float(self.num)
+            self.num_list.remove(self.num_list[len(self.num_list) - 1])
+            self.num_list.append(float(self.num))
+
+        elif self.action == "/":
+            self.num = self.num_list[len(self.num_list) - 1] / float(self.num)
+            self.num_list.remove(self.num_list[len(self.num_list) - 1])
+            self.num_list.append(float(self.num))
+
+        elif self.action == "!":
+            self.number = float(self.num)
+            self.number2 = float(self.num)
+            while self.number > 1:
+                self.number -= 1
+                self.number2 *= self.number
+            
+            self.num_list.remove(self.num_list[len(self.num_list) - 1])
+            self.num_list.append(self.number2)
+        
+        else:
+            self.num_list.append(float(self.num))
+
+
+    # The GUI
+    def GUI(self):
+        # Styles of calculator
+        self.light = """
 
         QMainWindow {
                 background: #fff;
@@ -49,6 +81,10 @@ class MainWindow(QMainWindow):
                 background: #5599ff;
         }
 
+        QMessageBox {
+                background: #fff;
+        }
+
         QMessageBox QPushButton {
                 height: auto;
                 width: auto;
@@ -60,13 +96,70 @@ class MainWindow(QMainWindow):
                 border: 0px;
                 padding: 10px;
         }
-        """)
+        """
+
+        self.dark = """
+
+            QMainWindow {
+                    background: #000;
+            }
+
+            QLabel {
+                    background: #111;
+                    color: #fff;
+                    border: 0px;
+                    padding: 10px;
+            }
+
+            QPushButton {
+                    background: #111;
+                    color: #fff;
+                    border: 0px;
+            }
+
+            QPushButton:hover {
+                    background: #222;
+            }
+
+            QPushButton:pressed {
+                    background: #5599ff;
+            }
+
+            QMessageBox {
+                    background: #000;
+            }
+
+            QMessageBox QPushButton {
+                    height: auto;
+                    width: auto;
+            }
+
+            QMessageBox QLabel {
+                    background: #000;
+                    color: #fff;
+                    border: 0px;
+                    padding: 10px;
+            }
+            """
 
 
+        self.setWindowTitle("Calculator")
+        self.setFixedSize(420, 180)
+        self.setStyleSheet(self.light)
+        
+        
         # Label
         self.label = QLabel("", self)
         self.label.move(10, 10)
         self.label.setFixedWidth(400)
+
+
+        # Dark mode
+        self.darkButton = QPushButton("🌑", self)
+        self.darkButton.move(380, 10)
+        self.darkButton.setFixedSize(30, 30)
+        self.darkButton.setToolTip("Dark mode")
+        self.darkButton.clicked.connect(self.dark_click)
 
 
         # Number buttons
@@ -140,44 +233,84 @@ class MainWindow(QMainWindow):
     # When the buttons pressed
     @pyqtSlot()
     def num1_click(self):
-        self.num += "1"
-        self.label.setText(self.label.text() + "1")
+        if self.action != "!":
+            self.num += "1"
+            self.label.setText(self.label.text() + "1")
+        
+        else:
+            pass
 
     def num2_click(self):
-        self.num += "2"
-        self.label.setText(self.label.text() + "2")
+        if self.action != "!":
+            self.num += "2"
+            self.label.setText(self.label.text() + "2")
+        
+        else:
+            pass
     
     def num3_click(self):
-        self.num += "3"
-        self.label.setText(self.label.text() + "3")
+        if self.action != "!":
+            self.num += "3"
+            self.label.setText(self.label.text() + "3")
+        
+        else:
+            pass
 
     def num4_click(self):
-        self.num += "4"
-        self.label.setText(self.label.text() + "4")
+        if self.action != "!":
+            self.num += "4"
+            self.label.setText(self.label.text() + "4")
+        
+        else:
+            pass
 
     def num5_click(self):
-        self.num += "5"
-        self.label.setText(self.label.text() + "5")
+        if self.action != "!":
+            self.num += "5"
+            self.label.setText(self.label.text() + "5")
+        
+        else:
+            pass
 
     def num6_click(self):
-        self.num += "6"
-        self.label.setText(self.label.text() + "6")
+        if self.action != "!":
+            self.num += "6"
+            self.label.setText(self.label.text() + "6")
+        
+        else:
+            pass
 
     def num7_click(self):
-        self.num += "7"
-        self.label.setText(self.label.text() + "7")
+        if self.action != "!":
+            self.num += "7"
+            self.label.setText(self.label.text() + "7")
+        
+        else:
+            pass
 
     def num8_click(self):
-        self.num += "8"
-        self.label.setText(self.label.text() + "8")
+        if self.action != "!":
+            self.num += "8"
+            self.label.setText(self.label.text() + "8")
+        
+        else:
+            pass
 
     def num9_click(self):
-        self.num += "9"
-        self.label.setText(self.label.text() + "9")
+        if self.action != "!":
+            self.num += "9"
+            self.label.setText(self.label.text() + "9")
+        
+        else:
+            pass
 
     def num0_click(self):
-        self.num += "0"
-        self.label.setText(self.label.text() + "0")
+        if self.action != "!":
+            self.num += "0"
+            self.label.setText(self.label.text() + "0")
+        
+        else:
+            pass
 
 
     # If addition button pressed
@@ -185,34 +318,7 @@ class MainWindow(QMainWindow):
         if self.num != "":
             self.label.setText(self.label.text() + " + ")
 
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-            
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
                 
             self.num = ""
             self.action = "+"
@@ -226,34 +332,7 @@ class MainWindow(QMainWindow):
         if self.num != "":
             self.label.setText(self.label.text() + " - ")
 
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
                 
             self.num = ""
             self.action = "-"
@@ -267,34 +346,7 @@ class MainWindow(QMainWindow):
         if self.num != "":
             self.label.setText(self.label.text() + " x ")
 
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-            
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
                 
             self.num = ""
             self.action = "*"
@@ -308,34 +360,7 @@ class MainWindow(QMainWindow):
         if self.num != "":
             self.label.setText(self.label.text() + " / ")
 
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-            
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
                 
             self.num = ""
             self.action = "/"
@@ -347,36 +372,9 @@ class MainWindow(QMainWindow):
     # If factorial button pressed
     def fac_click(self):
         if self.num != "":
-            self.label.setText(self.label.text() + "! ")
+            self.label.setText(self.label.text() + "!")
 
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-            
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
                 
             self.action = "!"
  
@@ -384,34 +382,7 @@ class MainWindow(QMainWindow):
     # If resault button pressed
     def resault_click(self):
         if self.num != "":
-            if self.action == "-":
-                self.num_list.append(int(self.num) * -1)
-
-            elif self.action == "+":
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "*":
-                self.num = self.num_list[len(self.num_list) - 1] * int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-
-            elif self.action == "/":
-                self.num = self.num_list[len(self.num_list) - 1] / int(self.num)
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(int(self.num))
-            
-            elif self.action == "!":
-                self.number = int(self.num)
-                self.number2 = int(self.num)
-                while self.number > 1:
-                    self.number -= 1
-                    self.number2 *= self.number
-                
-                self.num_list.remove(self.num_list[len(self.num_list) - 1])
-                self.num_list.append(self.number2)
-            
-            else:
-                self.num_list.append(int(self.num))
+            self.button_press()
 
             self.num = str(sum(self.num_list))
             self.resault_msg = QMessageBox.question(self, "Resault", "The resault is: {}".format(self.num), QMessageBox.Ok, QMessageBox.Ok)
@@ -422,6 +393,19 @@ class MainWindow(QMainWindow):
         
         else:
             pass
+
+    
+    # If dark mode button pressed
+    def dark_click(self):
+        if self.darkMode == False:
+            self.setStyleSheet(self.dark)
+            self.darkMode = True
+            self.darkButton.setText("🌕")
+        
+        else:
+            self.setStyleSheet(self.light)
+            self.darkButton.setText("🌑")
+            self.darkMode = False
 
 
 # appliaction
