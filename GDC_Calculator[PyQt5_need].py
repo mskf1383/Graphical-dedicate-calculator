@@ -15,28 +15,33 @@ class MainWindow(QMainWindow):
         self.num_list = []
         self.num = ""
         self.action = ""
-        self.GUI()
         self.darkMode = False
+        self.GUI()
 
 
     # Buttons press actions
     def button_press(self):
+        # If action is subtraction
         if self.action == "-":
             self.num_list.append(float(self.num) * -1)
 
+        # If action is addition
         elif self.action == "+":
             self.num_list.append(float(self.num))
         
+        # If action is multiplication
         elif self.action == "*":
             self.num = self.num_list[len(self.num_list) - 1] * float(self.num)
             self.num_list.remove(self.num_list[len(self.num_list) - 1])
             self.num_list.append(float(self.num))
 
+        # If action is division
         elif self.action == "/":
             self.num = self.num_list[len(self.num_list) - 1] / float(self.num)
             self.num_list.remove(self.num_list[len(self.num_list) - 1])
             self.num_list.append(float(self.num))
 
+        # If action is factorial
         elif self.action == "!":
             self.number = float(self.num)
             self.number2 = float(self.num)
@@ -47,6 +52,7 @@ class MainWindow(QMainWindow):
             self.num_list.remove(self.num_list[len(self.num_list) - 1])
             self.num_list.append(self.number2)
         
+        # If none of them
         else:
             self.num_list.append(float(self.num))
 
@@ -158,7 +164,7 @@ class MainWindow(QMainWindow):
         self.darkButton = QPushButton("🌑", self)
         self.darkButton.move(380, 10)
         self.darkButton.setFixedSize(30, 30)
-        self.darkButton.setToolTip("Dark mode")
+        self.darkButton.setToolTip("Dark mode: {}".format("off" if self.darkMode == False else "on"))
         self.darkButton.clicked.connect(self.dark_click)
 
 
@@ -398,14 +404,14 @@ class MainWindow(QMainWindow):
     # If dark mode button pressed
     def dark_click(self):
         if self.darkMode == False:
-            self.setStyleSheet(self.dark)
             self.darkMode = True
-            self.darkButton.setText("🌕")
         
         else:
-            self.setStyleSheet(self.light)
-            self.darkButton.setText("🌑")
             self.darkMode = False
+        
+        self.setStyleSheet(self.light if self.darkMode == False else self.dark)
+        self.darkButton.setText("🌑" if self.darkMode == False else "🌕")
+        self.darkButton.setToolTip("Dark mode: {}".format("off" if self.darkMode == False else "on"))
 
 
 # appliaction
