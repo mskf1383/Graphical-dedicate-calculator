@@ -5,6 +5,7 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMessageBox
 from PyQt5.QtCore import Qt, pyqtSlot
+from math import sqrt
 
 
 # Main window class
@@ -16,11 +17,25 @@ class MainWindow(QMainWindow):
         self.num = ""
         self.action = ""
         self.darkMode = False
+        self.sqrt = False
+        self.sign = "+"
+        self.signuse = False
         self.GUI()
-
+        
 
     # Buttons press actions
     def button_press(self):
+        # Sqrt
+        if self.sqrt == True:
+            self.num = str(sqrt(float(self.num)))
+            self.sqrt = False
+        
+        # Sign
+        if self.sign == "-":
+            self.num = str(float(self.num) * -1)
+            self.sign = "+"
+            self.signuse = False
+
         # If action is subtraction
         if self.action == "-":
             self.num_list.append(float(self.num) * -1)
@@ -48,10 +63,10 @@ class MainWindow(QMainWindow):
             while self.number > 1:
                 self.number -= 1
                 self.number2 *= self.number
-            
+                
             self.num_list.remove(self.num_list[len(self.num_list) - 1])
             self.num_list.append(self.number2)
-        
+
         # If none of them
         else:
             self.num_list.append(float(self.num))
@@ -71,12 +86,15 @@ class MainWindow(QMainWindow):
                 color: #000;
                 border: 0px;
                 padding: 10px;
+                font-size: 16px;
         }
 
         QPushButton {
                 background: #eee;
                 color: #000;
                 border: 0px;
+                padding: 10px;
+                font-size: 16px;
         }
 
         QPushButton:hover {
@@ -115,12 +133,15 @@ class MainWindow(QMainWindow):
                     color: #fff;
                     border: 0px;
                     padding: 10px;
+                    font-size: 16px;
             }
 
             QPushButton {
                     background: #111;
                     color: #fff;
                     border: 0px;
+                    padding: 10px;
+                    font-size: 16px;
             }
 
             QPushButton:hover {
@@ -150,89 +171,125 @@ class MainWindow(QMainWindow):
 
 
         self.setWindowTitle("Calculator")
-        self.setFixedSize(420, 180)
+        self.setFixedSize(330, 280)
         self.setStyleSheet(self.light)
         
         
         # Label
         self.label = QLabel("", self)
         self.label.move(10, 10)
-        self.label.setFixedWidth(400)
+        self.label.setFixedSize(310, 50)
 
 
         # Dark mode
         self.darkButton = QPushButton("🌑", self)
-        self.darkButton.move(380, 10)
-        self.darkButton.setFixedSize(30, 30)
+        self.darkButton.move(270, 10)
+        self.darkButton.setFixedSize(50, 50)
         self.darkButton.setToolTip("Dark mode: {}".format("off" if self.darkMode == False else "on"))
         self.darkButton.clicked.connect(self.dark_click)
 
 
         # Number buttons
         self.num1 = QPushButton("1", self)
-        self.num1.move(10, 50)
+        self.num1.move(10, 70)
+        self.num1.setFixedSize(50, 50)
         self.num1.clicked.connect(self.num1_click)
 
         self.num2 = QPushButton("2", self)
-        self.num2.move(110, 50)
+        self.num2.move(60, 70)
+        self.num2.setFixedSize(50, 50)
         self.num2.clicked.connect(self.num2_click)
 
         self.num3 = QPushButton("3", self)
-        self.num3.move(210, 50)
+        self.num3.move(110, 70)
+        self.num3.setFixedSize(50, 50)
         self.num3.clicked.connect(self.num3_click)
 
         self.num4 = QPushButton("4", self)
-        self.num4.move(10, 80)
+        self.num4.move(10, 120)
+        self.num4.setFixedSize(50, 50)
         self.num4.clicked.connect(self.num4_click)
 
         self.num5 = QPushButton("5", self)
-        self.num5.move(110, 80)
+        self.num5.move(60, 120)
+        self.num5.setFixedSize(50, 50)
         self.num5.clicked.connect(self.num5_click)
 
         self.num6 = QPushButton("6", self)
-        self.num6.move(210, 80)
+        self.num6.move(110, 120)
+        self.num6.setFixedSize(50, 50)
         self.num6.clicked.connect(self.num6_click)
 
         self.num7 = QPushButton("7", self)
-        self.num7.move(10, 110)
+        self.num7.move(10, 170)
+        self.num7.setFixedSize(50, 50)
         self.num7.clicked.connect(self.num7_click)
 
         self.num8 = QPushButton("8", self)
-        self.num8.move(110, 110)
+        self.num8.move(60, 170)
+        self.num8.setFixedSize(50, 50)
         self.num8.clicked.connect(self.num8_click)
 
         self.num9 = QPushButton("9", self)
-        self.num9.move(210, 110)
+        self.num9.move(110, 170)
+        self.num9.setFixedSize(50, 50)
         self.num9.clicked.connect(self.num9_click)
 
         self.num0 = QPushButton("0", self)
-        self.num0.move(10, 140)
+        self.num0.move(60, 220)
+        self.num0.setFixedSize(50, 50)
         self.num0.clicked.connect(self.num0_click)
+
+        self.dot = QPushButton("·", self)
+        self.dot.move(110, 220)
+        self.dot.setFixedSize(50, 50)
+        self.dot.clicked.connect(self.dot_click)
+
+        self.sign = QPushButton("+/-", self)
+        self.sign.move(10, 220)
+        self.sign.setFixedSize(50, 50)
+        self.sign.clicked.connect(self.sign_click)
 
 
         # Action buttons
+        self.clean = QPushButton("Clean", self)
+        self.clean.move(170, 70)
+        self.clean.setFixedSize(100, 50)
+        self.clean.clicked.connect(self.clean_click)
+
         self.add = QPushButton("+", self)
-        self.add.move(110, 140)
+        self.add.move(170, 120)
+        self.add.setFixedSize(50, 50)
         self.add.clicked.connect(self.add_click)
 
         self.sub = QPushButton("-", self)
-        self.sub.move(210, 140)
+        self.sub.move(220, 120)
+        self.sub.setFixedSize(50, 50)
         self.sub.clicked.connect(self.sub_click)
 
-        self.mul = QPushButton("x", self)
-        self.mul.move(310, 50)
+        self.mul = QPushButton("×", self)
+        self.mul.move(170, 170)
+        self.mul.setFixedSize(50, 50)
         self.mul.clicked.connect(self.mul_click)
 
-        self.div = QPushButton("/", self)
-        self.div.move(310, 80)
+        self.div = QPushButton("÷", self)
+        self.div.move(220, 170)
+        self.div.setFixedSize(50, 50)
         self.div.clicked.connect(self.div_click)
 
         self.fac = QPushButton("!", self)
-        self.fac.move(310, 110)
+        self.fac.move(270, 70)
+        self.fac.setFixedSize(50, 50)
         self.fac.clicked.connect(self.fac_click)
 
+        self.rad = QPushButton("√", self)
+        self.rad.move(270, 120)
+        self.rad.setFixedSize(50, 50)
+        self.rad.clicked.connect(self.rad_click)
+
         self.resault = QPushButton("=", self)
-        self.resault.move(310, 140)
+        self.resault.move(170, 220)
+        self.resault.setFixedSize(100, 50)
         self.resault.clicked.connect(self.resault_click)
 
 
@@ -318,6 +375,42 @@ class MainWindow(QMainWindow):
         else:
             pass
 
+    def dot_click(self):
+        if self.action != "!":
+            self.num += "."
+            self.label.setText(self.label.text() + ".")
+        
+        else:
+            pass
+
+    def sign_click(self):
+        if self.num == "":
+            if self.signuse == False:
+                if self.sign == "+":
+                    self.sign = "-"
+                    self.label.setText(self.label.text() + "-")
+                    self.signuse = True
+
+                else:
+                    self.sign = "+"
+                    self.label.setText(self.label.text() + "+")
+                    self.signuse = True
+            
+            else:
+                if self.sign == "+":
+                    self.sign = "-"
+                    x = self.label.text()
+                    x = self.label.text()[:len(x) - 1]
+                    self.label.setText(x + "-")
+                    self.signuse = True
+
+                else:
+                    self.sign = "+"
+                    x = self.label.text()
+                    x = self.label.text()[:len(x) - 1]
+                    self.label.setText(x + "+")
+                    self.signuse = True
+
 
     # If addition button pressed
     def add_click(self):
@@ -350,7 +443,7 @@ class MainWindow(QMainWindow):
     # If multiplication button pressed
     def mul_click(self):
         if self.num != "":
-            self.label.setText(self.label.text() + " x ")
+            self.label.setText(self.label.text() + " × ")
 
             self.button_press()
                 
@@ -364,7 +457,7 @@ class MainWindow(QMainWindow):
     # If division button pressed
     def div_click(self):
         if self.num != "":
-            self.label.setText(self.label.text() + " / ")
+            self.label.setText(self.label.text() + " ÷ ")
 
             self.button_press()
                 
@@ -383,6 +476,12 @@ class MainWindow(QMainWindow):
             self.button_press()
                 
             self.action = "!"
+
+    
+    def rad_click(self):
+        self.label.setText(self.label.text() + "√")
+
+        self.sqrt = True
  
 
     # If resault button pressed
@@ -399,6 +498,17 @@ class MainWindow(QMainWindow):
         
         else:
             pass
+
+
+    # If clean button pressed
+    def clean_click(self):
+        self.action = ""
+        self.num_list = []
+        self.num = ""
+        self.label.setText("")
+        self.sign = "+"
+        self.signuse = False
+        self.sqrt = False
 
     
     # If dark mode button pressed
